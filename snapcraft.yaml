@@ -1,14 +1,41 @@
 name: notion-linux
 title: Notion for linux.
 contact: xinorprime@gmail.com
-issues: 
-website: 
+confinement: strict
+grade: stable
+issues: https://github.com/Xinor/notion-linux/issues
+website: https://github.com/Xinor/notion-linux
 icon: resources/icon.png
 license: MIT
 summary: Notion for linux.
 description: A simple application that offers notion web application with electron.
-version: '1.0'
+version: '0.1'
 
 apps:
   notionlinux:
     command: notion-linux
+    extensions: [gnome-3-34]
+    plugs:
+      - browser-support
+      - network
+      - network-bind
+    environment:
+      TMPDIR: $XDG_RUNTIME_DIR
+
+base: core20
+
+parts:
+  notionlinux:
+    plugin: nil
+    source: https://github.com/Xinor/notion-linux
+    override-build: |
+      yarn install electron electron-packager
+      npx electron-packager . --overwrite --platform=linux --output=release-build --prune=true
+      cp -rv ./notion-linux-* $SNAPCRAFT_PART_INSTALL/notion-linux
+    build-snaps:
+      - node/16/stable
+    build-packages:
+      - unzip
+    stage-packages:
+      - libnss3
+      - libnspr4
