@@ -1,0 +1,32 @@
+{
+  "name": "notion-linux",
+  "version": "1.1.10",
+  "description": "notion website electron loader",
+  "main": "main.js",
+  "author": "Xinor",
+  "license": "MIT",
+  "type": "commonjs",
+  "build": {
+    "productName": "Notion Linux",
+    "appId": "com.notion-linux.app",
+    "publish": null,
+    "linux": {
+      "target": [
+        "snap"
+      ],
+      "category": "Development"
+    },
+    "directories": {
+      "buildResources": "resources",
+      "output": "release"
+  }
+  },
+  "scripts": {
+    "start": "electron .",
+    "dist": "rm -rf release && electron-builder build --publish never"
+  },
+  "devDependencies": {
+    "electron": "^15.1.0",
+    "electron-builder": "^22.11.7"
+  }
+}
